@@ -4,7 +4,7 @@ from difflib import SequenceMatcher
 import difflib
 import nltk
 from nltk.tokenize import sent_tokenize
-# nltk.download('punkt')
+#nltk.download('punkt')
 
 
 def similar(a,b):
@@ -12,7 +12,7 @@ def similar(a,b):
 
 #anticipation 
 def anticipation_func(body_of_text):
-    small_dictionary = {'Found2':['Any obligation on a party not to do something includes an obligation not to allow that thing to be done.']}
+    small_dictionary = {'Item 1 found':['Item 1'], 'Item 2 found':['Item 2']}
     # body_of_text = 'Here is the large body of text. Each sentence in this body, should be compared to each of the values in the dictionary. If the comparision ration is above certain treshold, corresponding key should be printed.'
     sentencing = sent_tokenize(body_of_text)
     list_of_keys = []
@@ -28,7 +28,7 @@ def anticipation_func(body_of_text):
 
 #anti_anticiption
 def anti_anticipation(body_of_text):
-    small_dictionary = {'This is defo not here':['Tola has a dick'], 'Dis is defo not here either':['Consultant should never cross the path of destiny']}
+    small_dictionary = {'Item 1 not found':['Item 1'], 'Item 2 not found':['Item 2']}
     sentencing = sent_tokenize(body_of_text)
     list_of_keys = []
     
@@ -52,13 +52,13 @@ def anti_anticipation(body_of_text):
 #CW
 def cw_processing(text):
     wording = text
-    a = {'Found1':['Consultant']}
+    a = {'Item 1 found':['Item 1', 'Similar Item 1', 'Another Similar Item 1']}
     for key,value in a.items():
         for item in value:
             if item in wording:
                 yield(key)
                 break
-    b = {'gigli':['bubu'], 'buba':['warrants'], 'hoojo':['yoooha']}
+    b = {'Item 1 not found':['Item 1'], 'Item 2 not found':['Item 2']}
     for key,value in b.items():
         for item in value:
             if item not in wording:
@@ -66,8 +66,8 @@ def cw_processing(text):
                 break   
 #REGEX
 def reg_pro(text):
-    patterns = [r'\srelevant time as']
-    rs=['relevant']
+    patterns = [r'Item 1', r'Item 2']
+    rs=['Response to Item 1', 'Response to Item 2']
     wording = text
     little_box = []
     for pattern in patterns:
@@ -80,13 +80,13 @@ def reg_pro(text):
 #APP
 def appoint_processing(text):
    wording = text
-   a = {'adios muchachos':['John', 'consultant', 'consultant']}
+   a = {'Item 1 found':['Item 1', 'Similar Item 1', 'Another Similar Item 1']}
    for key,value in a.items():
        for item in value:
            if item in wording:
                yield (key)
                break
-   b = {'gigli':['bubu'], 'buba':['warrants'], 'hoojo':['yoooha']}
+   b = {'Item 1 not found':['Item 1'], 'Item 2 not found':['Item 2']}
    for key,value in b.items():
        for item in value:
            if item not in wording:
